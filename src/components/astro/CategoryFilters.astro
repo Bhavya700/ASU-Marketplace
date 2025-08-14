@@ -1,0 +1,12 @@
+---
+// src/components/astro/CategoryFilters.astro
+const categories = ['Favorites', 'Textbooks', 'Electronics', 'Clothing', 'Housing', 'Furniture', 'Tickets', 'Services', 'Appliances', 'Other'];
+---
+<div class="flex items-center gap-2 overflow-x-auto pb-2">
+    <h3 class="text-lg font-semibold whitespace-nowrap">Filter by Tag</h3>
+    {categories.map(cat => (
+        <button class="bg-white border border-gray-300 text-gray-700 font-semibold py-1 px-4 rounded-full hover:bg-asu-light-grey whitespace-nowrap">
+            {cat}
+        </button>
+    ))}
+</div>

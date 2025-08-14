@@ -3,5 +3,34 @@
 import Layout from '../layouts/Layout.astro';
 ---
 <Layout title="Welcome to ASU Marketplace">
-    <h1 class="text-4xl font-bold">The best place for ASU students to trade.</h1>
+    <div class="w-full text-white bg-asu-dark-grey" style="background-image: url('/background-wave.svg'); background-repeat: no-repeat; background-position: bottom; background-size: contain;">
+        <div class="container mx-auto flex flex-col items-center justify-center h-[60vh] text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight">Welcome to</h1>
+            <h2 class="text-5xl md:text-7xl font-bold text-asu-gold mb-4">ASU Marketplace</h2>
+            <p class="text-lg md:text-xl max-w-2xl mb-8">
+                The ultimate campus marketplace for Sun Devils. Buy, sell, and connect with your Arizona State University community!
+            </p>
+            <div class="flex gap-4">
+                <a href="/explore" class="bg-asu-gold text-asu-dark-grey font-bold py-3 px-6 rounded hover:opacity-90 transition-opacity">
+                    Start Exploring
+                </a>
+                <a href="/new-listing" class="bg-gray-700 text-white font-bold py-3 px-6 rounded hover:bg-gray-600 transition-colors">
+                    New Listing
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container mx-auto text-center py-12">
+        <h3 class="text-3xl font-bold mb-4">Featured Items</h3>
+        <!-- You can add featured item cards here later -->
+        <p>Item listings will be shown here.</p>
+    </div>
 </Layout>
+
+<!-- Add a simple wave SVG for the background effect -->
+<style>
+    body {
+        /* This prevents a white flash before the page loads */
+        background-color: #F0F0F0;
+    }
+</style>

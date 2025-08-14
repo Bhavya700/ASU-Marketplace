@@ -1,0 +1,38 @@
+---
+// src/pages/explore.astro
+import Layout from '../layouts/Layout.astro';
+import ListingCard from '../components/astro/ListingCard.astro';
+import CategoryFilters from '../components/astro/CategoryFilters.astro';
+
+// Placeholder data - we will fetch this from Supabase later
+const mockListings = [
+    { title: 'Math Textbook', price: 10, quantity: 2, image_url: 'https://via.placeholder.com/300', category: 'Textbooks', date: 'Jun 6, 2025', description: 'Fresh' },
+    { title: 'Rizzing Jet', price: 20, quantity: 1, image_url: 'https://via.placeholder.com/300', category: 'Clothing', date: 'Jun 3, 2025', description: 'Those who know, srbtg' },
+    { title: 'Star Wars Set', price: 15, quantity: 5, image_url: 'https://via.placeholder.com/300', category: 'Other', date: 'Jun 3, 2025', description: 'Tuff' },
+];
+---
+
+<Layout title="Explore Listings">
+    <div class="container mx-auto px-4 md:px-6 py-8">
+        <!-- Category Filters -->
+        <CategoryFilters />
+
+        <!-- Search and View Map -->
+        <div class="my-6 flex flex-col md:flex-row gap-4 justify-center items-center">
+            <div class="relative w-full max-w-lg">
+                <input type="text" placeholder="Search for items..." class="w-full pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-asu-maroon" />
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </span>
+            </div>
+            <button class="bg-gray-700 text-white font-semibold py-2 px-6 rounded-full hover:bg-gray-600">View Map</button>
+        </div>
+
+        <!-- Listings Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {mockListings.map(listing => (
+                <ListingCard {...listing} />
+            ))}
+        </div>
+    </div>
+</Layout>
