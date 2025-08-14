@@ -1,0 +1,19 @@
+---
+// src/pages/new-listing.astro
+import Layout from '../layouts/Layout.astro';
+import { AuthProvider } from '../context/Auth.tsx';
+import ProfileCheck from '../components/react/ProfileCheck.tsx';
+import CreateListingForm from '../components/react/CreateListingForm.tsx';
+---
+<Layout title="Create New Listing">
+    <AuthProvider client:load>
+        <ProfileCheck>
+            <div class="container mx-auto max-w-2xl px-6 py-8">
+                <h1 class="text-3xl font-bold mb-6">Create a New Listing</h1>
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <CreateListingForm />
+                </div>
+            </div>
+        </ProfileCheck>
+    </AuthProvider>
+</Layout>
