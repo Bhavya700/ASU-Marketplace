@@ -1,0 +1,11 @@
+---
+// src/pages/login.astro
+import Layout from '../layouts/Layout.astro';
+import Login from '../components/react/Login.tsx';
+---
+<Layout title="Login">
+    <div class="flex flex-col items-center justify-center">
+        <h1 class="text-2xl mb-4">Login or Sign Up</h1>
+        <Login client:load />
+    </div>
+</Layout>

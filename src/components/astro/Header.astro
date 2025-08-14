@@ -1,0 +1,11 @@
+---
+// src/components/astro/Header.astro
+import HeaderButtons from '../react/HeaderButtons.tsx';
+---
+<header class="bg-gray-800 p-4">
+    <nav class="container mx-auto flex justify-between items-center">
+        <a href="/" class="text-xl font-bold text-yellow-400">ASU Marketplace</a>
+        <!-- This is where the magic happens. We load a React component for the dynamic part -->
+        <HeaderButtons client:load />
+    </nav>
+</header>
