@@ -1,33 +1,74 @@
-# Astro Starter Kit: Minimal
+# ASU Marketplace
 
-```sh
-npm create astro@latest -- --template minimal
+A modern marketplace platform built with Astro, React, and TypeScript, designed for Arizona State University students to buy, sell, and trade items.
+
+## 🚀 Phase 1 Complete
+
+Phase 1 of the ASU Marketplace project has been successfully completed, including:
+
+### ✅ Project Setup
+- **Astro Project**: Initialized with React and TypeScript support
+- **UI Framework**: Integrated Tailwind CSS for modern, responsive design
+- **Package Management**: All dependencies properly configured and installed
+
+### ✅ Supabase Integration
+- **Database**: Supabase client library installed and configured
+- **Authentication**: Ready for Google OAuth integration
+- **Schema Design**: Database structure planned for users and listings tables
+
+### ✅ Development Environment
+- **TypeScript**: Full TypeScript support for type safety
+- **React Components**: Ready for building interactive UI components
+- **Build System**: Development and production build pipelines configured
+
+## 🛠️ Tech Stack
+
+- **Frontend Framework**: [Astro](https://astro.build/) with React integration
+- **UI Framework**: [Tailwind CSS](https://tailwindcss.com/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Backend**: [Supabase](https://supabase.com/) (Database & Authentication)
+- **Package Manager**: npm
+
+## 📁 Project Structure
+
+```
+ASU-Marketplace/
+├── public/          # Static assets
+├── src/             # Source code
+│   ├── components/  # React components
+│   ├── pages/       # Astro pages
+│   └── layouts/     # Page layouts
+├── astro.config.mjs # Astro configuration
+├── tsconfig.json    # TypeScript configuration
+└── package.json     # Dependencies and scripts
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 Getting Started
 
-## 🚀 Project Structure
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-Inside of your Astro project, you'll see the following folders and files:
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Bhavya700/ASU-Marketplace.git
+   cd ASU-Marketplace
+   ```
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+4. Open your browser and navigate to `http://localhost:4321`
 
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
+## 📝 Available Scripts
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
@@ -36,8 +77,33 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🔧 Configuration
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Environment Variables
+Create a `.env` file in the root directory with your Supabase credentials:
+```env
+PUBLIC_SUPABASE_URL=your_supabase_project_url
+PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+## 🎯 Next Steps
+
+- [ ] Implement user authentication with Supabase
+- [ ] Create database schema for users and listings
+- [ ] Build marketplace listing components
+- [ ] Implement search and filtering functionality
+- [ ] Add image upload capabilities
+- [ ] Create user profile management
+
+## 🤝 Contributing
+
+This project is currently in development. Contributions and feedback are welcome!
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**Built with ❤️ for ASU students**
