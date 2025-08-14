@@ -1,11 +1,21 @@
 ---
 // src/components/astro/Header.astro
+import { AuthProvider } from '../../context/Auth.tsx';
 import HeaderButtons from '../react/HeaderButtons.tsx';
 ---
-<header class="bg-gray-800 p-4">
-    <nav class="container mx-auto flex justify-between items-center">
-        <a href="/" class="text-xl font-bold text-yellow-400">ASU Marketplace</a>
-        <!-- This is where the magic happens. We load a React component for the dynamic part -->
-        <HeaderButtons client:load />
+<header class="bg-white shadow-md">
+    <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-8">
+            <a href="/" class="text-xl font-bold text-asu-maroon">ASU Marketplace</a>
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="/explore" class="text-gray-600 hover:text-asu-maroon">Explore</a>
+                <a href="/messages" class="text-gray-600 hover:text-asu-maroon">Messages</a>
+                <a href="/purchase-history" class="text-gray-600 hover:text-asu-maroon">Purchase History</a>
+                <a href="/my-listings" class="text-gray-600 hover:text-asu-maroon">My Listings</a>
+            </div>
+        </div>
+        <AuthProvider client:load>
+            <HeaderButtons />
+        </AuthProvider>
     </nav>
 </header>

@@ -1,25 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { AuthProvider } from '../../context/Auth.tsx';
 import ProfileCheck from '../components/react/ProfileCheck.tsx';
 ---
 <Layout title="Messages">
-    <ProfileCheck client:load>
-        <div class="container mx-auto px-6 py-8">
-            <div class="flex bg-white shadow-md rounded-lg h-[75vh]">
-                <div class="w-1/3 border-r">
-                    <div class="p-4 border-b">
-                        <h2 class="text-xl font-bold">Your Conversations</h2>
+    <AuthProvider client:load>
+        <ProfileCheck>
+            <div class="container mx-auto px-6 py-8">
+                <div class="flex bg-white shadow-md rounded-lg h-[75vh]">
+                    <div class="w-1/3 border-r">
+                        <div class="p-4 border-b">
+                            <h2 class="text-xl font-bold">Your Conversations</h2>
+                        </div>
+                        <div class="p-4 text-center text-gray-500">
+                            No conversations yet.
+                        </div>
                     </div>
-                    <div class="p-4 text-center text-gray-500">
-                        No conversations yet.
+                    <div class="w-2/3 flex flex-col items-center justify-center text-center text-gray-500">
+                        <img src="https://via.placeholder.com/150" alt="Messages" class="rounded-full mb-4"/>
+                        <h3 class="text-lg font-semibold">Select a conversation to start chatting!</h3>
+                        <p>Welcome to ASU Marketplace Messages.</p>
                     </div>
-                </div>
-                <div class="w-2/3 flex flex-col items-center justify-center text-center text-gray-500">
-                    <img src="https://via.placeholder.com/150" alt="Messages" class="rounded-full mb-4"/>
-                    <h3 class="text-lg font-semibold">Select a conversation to start chatting!</h3>
-                    <p>Welcome to ASU Marketplace Messages.</p>
                 </div>
             </div>
-        </div>
-    </ProfileCheck>
+        </ProfileCheck>
+    </AuthProvider>
 </Layout>

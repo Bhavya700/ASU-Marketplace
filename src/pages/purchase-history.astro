@@ -1,14 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { AuthProvider } from '../../context/Auth.tsx';
 import ProfileCheck from '../components/react/ProfileCheck.tsx';
 ---
 <Layout title="Purchase History">
-    <ProfileCheck client:load>
-        <div class="container mx-auto px-6 py-8 text-center">
-            <h1 class="text-3xl font-bold mb-6">Purchase History</h1>
-             <div class="text-center py-16 bg-white rounded-lg shadow-md">
-                <p class="text-gray-600">No purchases yet.</p>
+    <AuthProvider client:load>
+        <ProfileCheck>
+            <div class="container mx-auto px-6 py-8 text-center">
+                <h1 class="text-3xl font-bold mb-6">Purchase History</h1>
+                <div class="text-center py-16 bg-white rounded-lg shadow-md">
+                    <p class="text-gray-600">No purchases yet.</p>
+                </div>
             </div>
-        </div>
-    </ProfileCheck>
+        </ProfileCheck>
+    </AuthProvider>
 </Layout>
