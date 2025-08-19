@@ -1,0 +1,5 @@
+node_modules
+
+# Ignore Google OAuth client secrets
+client_secret_*.json
+*.secrets.json
