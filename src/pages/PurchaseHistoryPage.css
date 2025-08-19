@@ -1,0 +1,37 @@
+.purchase-history-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.purchase-history-container h1 {
+  color: #8C1D40;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.purchase-history-container p {
+  color: #666;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.placeholder-content {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 2px dashed #dee2e6;
+}
+
+.placeholder-content p {
+  margin-bottom: 1rem;
+}
+
+.placeholder-content ul {
+  margin-left: 2rem;
+}
+
+.placeholder-content li {
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
