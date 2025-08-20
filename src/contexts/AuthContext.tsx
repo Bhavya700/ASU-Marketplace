@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '../lib/supabase';
+import { supabase, Profile, TABLES } from '../lib/supabase';
 
 interface AuthContextType {
   currentUser: User | null;
+  profile: Profile | null;
   session: Session | null;
-  signup: (email: string, password: string, username: string, file?: File) => Promise<void>;
+  signup: (email: string, password: string, username: string, fullName?: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loginWithGoogle: () => Promise<void>;
@@ -28,6 +29,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,63 +38,72 @@ export function AuthProvider({ children }: AuthProviderProps) {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setCurrentUser(session?.user ?? null);
-      setLoading(false);
+      if (session?.user) {
+        fetchProfile(session.user.id);
+      } else {
+        setLoading(false);
+      }
     });
 
     // Listen for auth changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       setCurrentUser(session?.user ?? null);
+      if (session?.user) {
+        await fetchProfile(session.user.id);
+      } else {
+        setProfile(null);
+      }
       setLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
-  async function signup(email: string, password: string, username: string, file?: File) {
+  async function fetchProfile(userId: string) {
+    try {
+      const { data, error } = await supabase
+        .from(TABLES.PROFILES)
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+        setProfile(null);
+      } else {
+        setProfile(data);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      setProfile(null);
+    }
+  }
+
+  async function signup(email: string, password: string, username: string, fullName?: string) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          username,
+          full_name: fullName || '',
+        }
+      }
     });
 
     if (error) throw error;
 
     if (data.user) {
-      let profilePictureUrl = '/asu-logo.png';
-
-      if (file) {
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${data.user.id}.${fileExt}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('profile-pictures')
-          .upload(fileName, file);
-
-        if (uploadError) throw uploadError;
-
-        const { data: urlData } = supabase.storage
-          .from('profile-pictures')
-          .getPublicUrl(fileName);
-
-        profilePictureUrl = urlData.publicUrl;
-      }
-
-      // Create user profile
-      const { error: profileError } = await supabase
-        .from('users')
-        .insert([
-          {
-            id: data.user.id,
-            email,
-            username,
-            profile_picture: profilePictureUrl,
-            created_at: new Date().toISOString(),
-            last_login: new Date().toISOString(),
-          },
-        ]);
-
-      if (profileError) throw profileError;
+      // Profile will be created automatically by the database trigger
+      // We just need to wait a moment and fetch it
+      setTimeout(() => {
+        if (data.user) {
+          fetchProfile(data.user.id);
+        }
+      }, 1000);
     }
   }
 
@@ -108,14 +119,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function logout() {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
+    setProfile(null);
   }
 
   async function loginWithGoogle() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
+        redirectTo: `${window.location.origin}/auth/callback`
+      }
     });
 
     if (error) throw error;
@@ -123,6 +135,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const value = {
     currentUser,
+    profile,
     session,
     signup,
     login,
@@ -133,7 +146,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 }

@@ -7,6 +7,7 @@ function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -21,7 +22,7 @@ function LoginPage() {
 
     try {
       if (isSignup) {
-        await signup(email, password, username);
+        await signup(email, password, username, fullName);
         navigate('/');
       } else {
         await login(email, password);
@@ -36,9 +37,11 @@ function LoginPage() {
 
   const handleGoogleLogin = async () => {
     try {
+      setLoading(true);
       await loginWithGoogle();
     } catch (error: any) {
       setError(error.message);
+      setLoading(false);
     }
   };
 
@@ -54,17 +57,30 @@ function LoginPage() {
 
         <form onSubmit={handleSubmit} className="login-form">
           {isSignup && (
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required={isSignup}
-                placeholder="Enter your username"
-              />
-            </div>
+            <>
+              <div className="form-group">
+                <label htmlFor="fullName">Full Name</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required={isSignup}
+                  placeholder="Enter your full name"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="username">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required={isSignup}
+                  placeholder="Enter your username"
+                />
+              </div>
+            </>
           )}
 
           <div className="form-group">
@@ -100,17 +116,28 @@ function LoginPage() {
           <span>or</span>
         </div>
 
-        <button onClick={handleGoogleLogin} className="google-btn">
-          Continue with Google
+        <button 
+          onClick={handleGoogleLogin} 
+          className="google-btn" 
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Continue with Google'}
         </button>
 
-        <div className="toggle-mode">
+        <div className="login-footer">
           <p>
             {isSignup ? 'Already have an account?' : "Don't have an account?"}
             <button
               type="button"
-              onClick={() => setIsSignup(!isSignup)}
               className="toggle-btn"
+              onClick={() => {
+                setIsSignup(!isSignup);
+                setError('');
+                setEmail('');
+                setPassword('');
+                setUsername('');
+                setFullName('');
+              }}
             >
               {isSignup ? 'Login' : 'Sign Up'}
             </button>

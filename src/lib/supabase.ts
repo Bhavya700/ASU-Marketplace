@@ -9,18 +9,16 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// Database types
-export interface User {
+// Database types matching our schema
+export interface Profile {
   id: string;
   email: string;
   username: string;
+  full_name?: string;
+  profile_picture: string;
   created_at: string;
+  updated_at: string;
   last_login: string;
-  profile_picture: string | null;
-  preferences: string[];
-  interests: string[];
-  wanted_items: string[];
-  favorites: string[];
 }
 
 export interface Listing {
@@ -28,37 +26,56 @@ export interface Listing {
   title: string;
   description: string;
   price: number;
-  image: string | null;
+  image_url?: string;
   tags: string[];
   location: string;
-  lat: number | null;
-  lng: number | null;
+  lat?: number;
+  lng?: number;
   user_id: string;
-  created_at: string;
-  updated_at: string;
   status: 'active' | 'sold' | 'inactive';
   quantity: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Conversation {
+  id: string;
+  listing_id?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ConversationParticipant {
+  conversation_id: string;
+  user_id: string;
 }
 
 export interface Message {
   id: string;
-  chat_id: string;
+  conversation_id: string;
   sender_id: string;
   content: string;
   created_at: string;
-  message_type: 'text' | 'meetup_request' | 'meetup_response';
-  meetup_data?: {
-    date: string;
-    time: string;
-    location: string;
-    status: 'pending' | 'accepted' | 'declined' | 'reschedule_requested';
-  };
 }
 
-export interface Chat {
-  id: string;
-  users: string[];
-  listing_id: string | null;
-  created_at: string;
-  updated_at: string;
-}
+// Database table names
+export const TABLES = {
+  PROFILES: 'profiles',
+  LISTINGS: 'listings',
+  CONVERSATIONS: 'conversations',
+  CONVERSATION_PARTICIPANTS: 'conversation_participants',
+  MESSAGES: 'messages',
+} as const;
+
+// Allowed tags for listings (as per requirements)
+export const ALLOWED_TAGS = [
+  'Textbooks',
+  'Electronics', 
+  'Clothing',
+  'Furniture',
+  'Tickets',
+  'Appliances',
+  'Other'
+] as const;
+
+export type AllowedTag = typeof ALLOWED_TAGS[number];
